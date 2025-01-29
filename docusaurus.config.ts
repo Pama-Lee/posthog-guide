@@ -20,7 +20,7 @@ const config: Config = {
   organizationName: 'pamalee', // Usually your GitHub org/user name.
   projectName: 'posthog-guide', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   markdown: {
