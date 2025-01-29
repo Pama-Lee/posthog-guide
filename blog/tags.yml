@@ -17,3 +17,13 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+community:
+  label: community
+  permalink: /community
+  description: PostHog Guide 社区相关信息和动态
+
+posthog:
+  label: posthog
+  permalink: /posthog
+  description: PostHog 学习资源和使用经验分享
