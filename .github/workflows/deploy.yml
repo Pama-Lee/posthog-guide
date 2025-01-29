@@ -22,7 +22,16 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Set build info
+        run: |
+          echo "NEXT_PUBLIC_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_BUILD_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Build website
+        env:
+          BUILD_TIME: ${{ env.NEXT_PUBLIC_BUILD_TIME }}
+          BUILD_VERSION: ${{ env.NEXT_PUBLIC_BUILD_VERSION }}
         run: npm run build
 
       # 部署到 GitHub Pages

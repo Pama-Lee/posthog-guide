@@ -17,7 +17,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'pamalee', // Usually your GitHub org/user name.
+  organizationName: 'pama-lee', // Usually your GitHub org/user name.
   projectName: 'posthog-guide', // Usually your repo name.
 
   onBrokenLinks: 'warn',
@@ -45,7 +45,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/pama-lee/posthog-guide/tree/main/docs',
+            'https://github.com/pama-lee/posthog-guide/tree/main',
         },
         blog: {
           showReadingTime: true,
@@ -54,7 +54,7 @@ const config: Config = {
             xslt: true,
           },
           editUrl:
-            'https://github.com/pama-lee/posthog-guide/tree/main/docs',
+            'https://github.com/pama-lee/posthog-guide/tree/main',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -133,7 +133,9 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} PostHog 指南. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} PostHog 指南.${
+        process.env.BUILD_VERSION ? ` (版本: ${process.env.BUILD_VERSION}, 构建时间: ${process.env.BUILD_TIME})` : ''
+      }`,
     },
     prism: {
       theme: prismThemes.github,
