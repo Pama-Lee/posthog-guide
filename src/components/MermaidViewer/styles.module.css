@@ -1,0 +1,144 @@
+.mermaidWrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mermaidContent {
+  transition: transform 0.1s ease;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.mermaidContent:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 全屏模式样式 */
+.fullscreenOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreenContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.fullscreenContent .mermaidWrapper {
+  width: auto;
+  height: auto;
+  cursor: grab;
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50%;
+  min-height: 50%;
+}
+
+.fullscreenContent .mermaidContent {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: none;
+  pointer-events: all;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* 控制按钮样式 */
+.controls {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10000;
+  background: var(--ifm-background-surface-color);
+  padding: 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: all;
+}
+
+.controlButton {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: all;
+}
+
+.controlButton:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.controlButton:active {
+  transform: translateY(0);
+}
+
+/* 暗色主题适配 */
+[data-theme='dark'] .fullscreenContent .mermaidContent {
+  background-color: var(--ifm-background-surface-color);
+}
+
+[data-theme='dark'] .controls {
+  background-color: var(--ifm-background-surface-color);
+}
+
+[data-theme='dark'] .controlButton {
+  background-color: var(--ifm-color-primary-darker);
+}
+
+/* 关闭按钮 */
+.closeButton {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10000;
+  font-size: 1.2rem;
+  pointer-events: all;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+  opacity: 0.9;
+} 
