@@ -134,7 +134,9 @@ const config: Config = {
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} PostHog 指南.${
-        process.env.BUILD_VERSION ? ` (版本: ${process.env.BUILD_VERSION}, 构建时间: ${process.env.BUILD_TIME})` : ''
+        process.env.BUILD_VERSION ? 
+        ` (版本: <a href="https://github.com/pama-lee/posthog-guide/commit/${process.env.BUILD_VERSION}" target="_blank">${process.env.BUILD_VERSION}</a>, 构建时间: ${process.env.BUILD_TIME})` 
+        : ''
       }`,
     },
     prism: {
