@@ -143,34 +143,6 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-    // mermaid: {
-    //   theme: {
-    //     light: 'neutral',
-    //     dark: 'dark',
-    //   },
-    //   options: {
-    //     fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif',
-    //     flowchart: {
-    //       curve: 'basis',
-    //       nodeSpacing: 50,
-    //       rankSpacing: 50,
-    //       padding: 15,
-    //     },
-    //     themeVariables: {
-    //       primaryColor: '#8d6e63',
-    //       primaryTextColor: '#3e2723',
-    //       primaryBorderColor: '#5d4037',
-    //       lineColor: '#795548',
-    //       secondaryColor: '#efebe9',
-    //       tertiaryColor: '#d7ccc8',
-    //       mainBkg: '#efebe9',
-    //       nodeBorder: '#5d4037',
-    //       clusterBkg: '#d7ccc8',
-    //       titleColor: '#3e2723',
-    //     },
-    //   },
-    // },
-    
   } satisfies Preset.ThemeConfig,
 };
 
