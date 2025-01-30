@@ -1,0 +1,8 @@
+{
+  "label": "💾 持久化数据库",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "了解 PostHog 中的持久化数据库架构和使用，包括 ClickHouse、PostgreSQL 和 Redis"
+  }
+} 
