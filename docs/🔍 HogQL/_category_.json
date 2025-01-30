@@ -1,0 +1,8 @@
+{
+  "label": "🔍 HogQL",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "HogQL 是 PostHog 基于 ClickHouse SQL 开发的查询语言，提供了更简单的事件和用户属性访问、空值处理以及可视化集成等增强功能。"
+  }
+} 

@@ -2,165 +2,290 @@
 
 ![ClickHouse](https://svgmix.com/uploads/ec83c7-clickhouse.svg)
 
-ClickHouse 是 PostHog 的核心数据存储引擎，专门用于处理和分析大规模事件数据。本文将详细介绍 ClickHouse 在 PostHog 中的应用架构、数据模型和优化策略。
+ClickHouse 是 PostHog 的核心分析引擎，负责处理和分析大规模事件数据。不同于直接写入数据，PostHog 采用从 Kafka 拉取数据的方式，这种设计显著提高了数据摄入管道的容错能力。
 
-## 为什么选择 ClickHouse？
+## 架构概览
 
-PostHog 选择 ClickHouse 作为主要的分析数据库有几个关键原因：
+PostHog 采用分片的 ClickHouse 设置来确保系统的可扩展性。以下是数据流转的整体架构：
 
-ClickHouse 的列式存储特性非常适合分析场景。在产品分析中，我们经常需要对特定属性进行聚合分析，而不是读取完整的事件记录。列式存储让这类查询能够只读取需要的列，大大提高了查询效率。
+```mermaid
+flowchart LR
+    classDef table fill:#f6e486,stroke:#ffc45d;
+    kafka_events["kafka_events table<br/>(Kafka table engine)"]:::table
+    eventsmv["events_mv table<br/>(Materialized view)"]:::table
+    writable_events["writable_events table</br/>(Distributed table engine)"]:::table
+    events["events table</br/>(Distributed table engine)"]:::table
+    sharded_events["sharded_events table<br/>(ReplicatedReplacingMergeTree table engine)"]:::table
 
-此外，ClickHouse 强大的数据压缩能力也是一个重要优势。通过对相似数据进行高效压缩，ClickHouse 可以在保持快速查询性能的同时，显著减少存储成本。这对于需要存储海量事件数据的 PostHog 来说尤为重要。
+    kafka_events -.clickhouse_events_json topic.- Kafka
+    eventsmv --reads from--> kafka_events
+    eventsmv --pushes data to--> writable_events
+    writable_events -.pushes data to.-> sharded_events
 
-## 数据模型设计
+    events -.reads from.-> sharded_events
+```
 
-### 事件表结构
+## 核心表结构
 
-PostHog 在 ClickHouse 中的主要表结构如下：
+### 1. Kafka 事件表 (`kafka_events`)
+
+使用 Kafka 表引擎的 `kafka_events` 表作为数据入口：
+
+```sql
+CREATE TABLE kafka_events
+(
+    uuid UUID,
+    event String,
+    properties String,
+    timestamp DateTime64(6, 'UTC'),
+    team_id Int64,
+    distinct_id String,
+    created_at DateTime64(6, 'UTC'),
+    elements_chain String
+)
+ENGINE = Kafka('kafka:9092', 'clickhouse_events_json', 'clickhouse_consumer_group', 'JSONEachRow');
+```
+
+这个表的特点：
+- 使用 Kafka 表引擎连接 Kafka 集群
+- 在查询时消费数据，并更新 Kafka 消费组的偏移量
+- 支持 JSON 格式的事件数据解析
+
+### 2. 物化视图 (`events_mv`)
+
+`events_mv` 表作为数据管道，定期从 `kafka_events` 拉取数据并推送到目标表：
+
+```sql
+CREATE MATERIALIZED VIEW events_mv
+TO writable_events
+AS SELECT
+    uuid,
+    event,
+    properties,
+    timestamp,
+    team_id,
+    distinct_id,
+    created_at,
+    elements_chain
+FROM kafka_events;
+```
+
+### 3. 可写事件表 (`writable_events`)
+
+使用分布式表引擎的 `writable_events` 表负责数据分发：
+
+```sql
+CREATE TABLE writable_events
+(
+    uuid UUID,
+    event String,
+    properties String,
+    timestamp DateTime64(6, 'UTC'),
+    team_id Int64,
+    distinct_id String,
+    elements_chain String,
+    created_at DateTime64(6, 'UTC'),
+    _timestamp DateTime,
+    _offset UInt64
+)
+ENGINE = Distributed('posthog', 'posthog', 'sharded_events', sipHash64(distinct_id));
+```
+
+关键特性：
+- 接收来自 `events_mv` 的数据推送
+- 基于 `distinct_id` 计算哈希值进行分片
+- 将数据路由到正确的分片节点
+- 不包含物化列以优化插入性能
+
+### 4. 分片事件表 (`sharded_events`)
+
+使用 ReplicatedReplacingMergeTree 引擎的 `sharded_events` 表存储实际数据：
+
+```sql
+CREATE TABLE sharded_events
+(
+    uuid UUID,
+    event String,
+    properties String,
+    timestamp DateTime64(6, 'UTC'),
+    team_id Int64,
+    distinct_id String,
+    elements_chain String,
+    created_at DateTime64(6, 'UTC'),
+    _timestamp DateTime,
+    _offset UInt64
+)
+ENGINE = ReplicatedReplacingMergeTree('/clickhouse/tables/{shard}/posthog.sharded_events', '{replica}', created_at)
+PARTITION BY toYYYYMM(timestamp)
+ORDER BY (team_id, toDate(timestamp), event, uuid);
+```
+
+特点：
+- 支持数据分片和复制
+- 通过 `events` 表间接查询
+- 使用月份作为分区键
+- 优化的排序键设计
+
+### 5. 查询事件表 (`events`)
+
+与 `writable_events` 类似，`events` 表也使用分布式表引擎：
 
 ```sql
 CREATE TABLE events
 (
     uuid UUID,
-    event VARCHAR,
-    properties JSON,
+    event String,
+    properties String,
     timestamp DateTime64(6, 'UTC'),
     team_id Int64,
-    distinct_id VARCHAR,
+    distinct_id String,
+    elements_chain String,
     created_at DateTime64(6, 'UTC'),
-    elements_chain VARCHAR,
-    person_id UUID,
-    person_properties JSON,
-    group_properties JSON
+    _timestamp DateTime,
+    _offset UInt64
 )
-ENGINE = ReplacingMergeTree(created_at)
-PARTITION BY toYYYYMM(timestamp)
-ORDER BY (team_id, toDate(timestamp), event, uuid)
-SETTINGS index_granularity = 8192
+ENGINE = Distributed('posthog', 'posthog', 'sharded_events', sipHash64(distinct_id));
 ```
 
-这个表结构经过精心设计，具有以下特点：
+功能：
+- 处理应用层查询
+- 自动确定要查询的分片
+- 聚合来自各分片的结果
 
-1. **分区策略**：使用月份作为分区键，便于管理历史数据
-2. **排序键选择**：综合考虑了查询模式和写入性能
-3. **JSON 类型**：灵活存储动态属性数据
-4. **时间精度**：使用微秒级时间戳确保精确性
+## 用户数据处理
 
-### 物化视图
+### 用户表设计
 
-为了优化常见查询场景，PostHog 设置了一系列物化视图：
+PostgreSQL 是用户信息和 `distinct_id` 映射的主数据源，但为了提升查询性能，这些数据会被复制到 ClickHouse：
 
 ```sql
-CREATE MATERIALIZED VIEW events_mv
-TO events_flat
-AS SELECT
-    uuid,
-    event,
-    timestamp,
-    team_id,
-    distinct_id,
-    JSONExtractString(properties, 'path') AS path,
-    JSONExtractString(properties, 'browser') AS browser
-FROM events
-WHERE event = '$pageview'
+CREATE TABLE person
+(
+    id UUID,
+    created_at DateTime64(6, 'UTC'),
+    team_id Int64,
+    properties String,
+    is_identified Int8,
+    is_deleted Int8,
+    version UInt64
+)
+ENGINE = ReplicatedReplacingMergeTree('/clickhouse/tables/{shard}/posthog.person', '{replica}', version)
+ORDER BY (team_id, id);
+
+CREATE TABLE person_distinct_id
+(
+    distinct_id String,
+    person_id UUID,
+    team_id Int64,
+    is_deleted Int8,
+    version UInt64
+)
+ENGINE = ReplicatedReplacingMergeTree('/clickhouse/tables/{shard}/posthog.person_distinct_id', '{replica}', version)
+ORDER BY (team_id, distinct_id);
 ```
 
-## 性能优化策略
+特点：
+- 使用 ReplacingMergeTree 引擎
+- 通过 version 列处理更新
+- 在分片设置中完全复制到每个节点
+- 避免跨网络 JOIN 操作
+
+## 性能优化
 
 ### 1. 查询优化
 
-PostHog 采用了多层次的查询优化策略：
+```sql
+-- 使用物化视图优化常见查询
+CREATE MATERIALIZED VIEW events_daily
+ENGINE = SummingMergeTree
+PARTITION BY toYYYYMM(date)
+ORDER BY (team_id, date, event)
+AS SELECT
+    team_id,
+    toDate(timestamp) as date,
+    event,
+    count() as event_count
+FROM events
+GROUP BY team_id, date, event;
+```
 
-1. **预聚合数据**：
-   对于常见的分析场景，系统会预先计算聚合结果并存储在专门的表中。这大大减少了实时查询的计算量。
+### 2. 分片优化
 
-2. **查询重写**：
-   系统会自动分析和优化用户查询，例如：
-   ```sql
-   -- 优化前
-   SELECT count(*) FROM events WHERE timestamp > now() - INTERVAL 7 DAY
-   
-   -- 优化后
-   SELECT sum(event_count) FROM daily_events 
-   WHERE day >= today() - 7
-   ```
+```sql
+-- 配置分片权重
+SET insert_distributed_sync = 1;
+SET optimize_skip_unused_shards = 1;
+SET optimize_distributed_group_by_sharding_key = 1;
+```
 
-3. **并行查询执行**：
-   利用 ClickHouse 的并行处理能力，将大查询拆分成多个子查询并行执行。
+### 3. 数据压缩
 
-### 2. 写入优化
-
-1. **批量写入**：
-   ```python
-   events = []
-   for i in range(1000):
-       events.append({
-           'event': 'pageview',
-           'properties': {'path': '/'},
-           'timestamp': now()
-       })
-   client.execute('INSERT INTO events VALUES', events)
-   ```
-
-2. **异步写入缓冲**：
-   使用消息队列缓冲写入请求，避免写入峰值对系统造成压力。
-
-### 3. 存储优化
-
-1. **数据压缩**：
-   ```sql
-   ALTER TABLE events
-   MODIFY SETTING min_bytes_for_wide_part = 10485760,
-                  min_rows_for_wide_part = 512000
-   ```
-
-2. **冷热数据分离**：
-   根据数据访问频率，将数据存储在不同性能的存储设备上。
+```sql
+ALTER TABLE events
+    MODIFY SETTING min_bytes_for_wide_part = 10485760,
+    min_rows_for_wide_part = 512000;
+```
 
 ## 监控和维护
 
-### 1. 关键指标监控
+### 1. 系统监控
 
-需要重点关注的指标包括：
-- 查询延迟分布
-- 写入队列长度
-- 磁盘使用情况
-- 压缩率
-- 缓存命中率
+```sql
+-- 监控分片状态
+SELECT
+    shard_num,
+    shard_weight,
+    replica_num,
+    is_local
+FROM system.clusters
+WHERE cluster = 'posthog';
 
-### 2. 常见运维任务
+-- 监控表大小
+SELECT
+    partition,
+    name,
+    rows,
+    bytes_on_disk
+FROM system.parts
+WHERE table = 'events'
+ORDER BY partition;
+```
 
-1. **数据清理**：
-   ```sql
-   ALTER TABLE events
-   DROP PARTITION '202301'
-   ```
+### 2. 性能监控
 
-2. **表优化**：
-   ```sql
-   OPTIMIZE TABLE events
-   FINAL
-   ```
+```sql
+-- 查询性能分析
+SELECT
+    query,
+    read_rows,
+    read_bytes,
+    memory_usage,
+    query_duration_ms
+FROM system.query_log
+WHERE type = 'QueryFinish'
+ORDER BY query_duration_ms DESC
+LIMIT 10;
+```
 
-## 最佳实践建议
+## 最佳实践
 
-1. **查询优化**：
-   - 避免使用 `SELECT *`
-   - 合理使用分区剪枝
-   - 利用物化视图加速查询
+1. **数据写入**：
+   - 避免写入重复数据
+   - 使用批量插入
+   - 合理设置分区策略
 
-2. **数据建模**：
-   - 根据查询模式设计排序键
-   - 合理使用稀疏索引
-   - 控制 JSON 属性的数量
+2. **查询优化**：
+   - 利用物化视图
+   - 合理使用分片键
+   - 优化 JOIN 操作
 
 3. **运维管理**：
-   - 定期监控和清理过期数据
-   - 及时优化表结构
-   - 做好备份和恢复计划
+   - 定期监控分片平衡
+   - 及时清理过期数据
+   - 保持适当的副本数
 
 ## 扩展阅读
 
 - [ClickHouse 官方文档](https://clickhouse.com/docs/en/intro)
-- [PostHog 数据架构](https://posthog.com/docs/how-posthog-works)
-- [ClickHouse 性能优化指南](https://clickhouse.com/docs/en/operations/performance) 
+- [PostHog 数据摄入指南](/handbook/engineering/clickhouse/data-ingestion)
+- [ClickHouse 性能优化](https://clickhouse.com/docs/en/operations/performance) 
