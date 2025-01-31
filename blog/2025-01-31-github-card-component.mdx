@@ -1,0 +1,47 @@
+---
+slug: github-card-component
+title: GithubCard：优雅的 GitHub 仓库展示组件
+authors: [pamalee]
+tags: [component, github]
+---
+
+import GithubCard from '@site/src/components/GithubCard';
+
+PostHog Guide 网站最近新增了一个精心设计的 GitHub 仓库展示组件。这个组件能够以优雅的卡片形式展示任何 GitHub 仓库的基本信息，完美适配了网站的设计风格，并且支持响应式布局和暗色主题。
+
+在开发 PostHog Guide 文档网站的过程中，我们经常需要引用各种 GitHub 仓库。为了让这些引用更加直观和美观，我们开发了这个 GithubCard 组件。它不仅能展示仓库的基本信息，还提供了流畅的交互体验和精致的视觉效果。
+
+让我们先看几个实际的展示效果。这是我们的主仓库：
+
+<GithubCard repo="pama-lee/posthog-guide" />
+
+组件的使用非常简单，你只需要在 MDX 文件中导入组件，然后传入仓库地址即可：
+
+```jsx
+import GithubCard from '@site/src/components/GithubCard';
+
+<GithubCard repo="pama-lee/posthog-guide" />
+```
+
+这个组件支持三种不同的尺寸。当你需要在紧凑的空间中展示仓库时，可以使用小尺寸版本：
+
+<GithubCard 
+  repo="pama-lee/posthog-guide" 
+  size="small"
+/>
+
+如果你想要突出显示某个重要的仓库，可以使用大尺寸版本：
+
+<GithubCard 
+  repo="pama-lee/posthog-guide"
+  size="large"
+/>
+
+除了尺寸之外，组件还支持多个显示选项的配置。比如，你可以选择是否显示仓库所有者、编程语言标签和统计数据。这让你能够根据具体需求来调整信息的展示密度。下面是一个隐藏了语言标签的例子：
+
+<GithubCard 
+  repo="pama-lee/posthog-guide"
+  showLanguage={false}
+/>
+
+统计数据区域使用了来自 React Icons 库的图标，确保了图标风格的统一性。这些图标和文字在鼠标悬停时都会变成主题色，提供了良好的交互反馈。整个组件完全支持响应式设计，在不同尺寸的屏幕上都能保持良好的显示效果。同时，它还完美支持暗色主题，会自动适应网站的主题切换。

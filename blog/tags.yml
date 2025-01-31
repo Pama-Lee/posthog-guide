@@ -27,3 +27,13 @@ posthog:
   label: posthog
   permalink: /posthog
   description: PostHog 学习资源和使用经验分享
+
+component:
+  label: component
+  permalink: /component
+  description: PostHog Guide 网站组件介绍和使用说明
+
+github:
+  label: github
+  permalink: /github
+  description: GitHub 相关功能和集成
