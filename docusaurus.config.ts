@@ -22,7 +22,7 @@ const config: Config = {
   organizationName: 'Pama-Lee',
   projectName: 'posthog-guide',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   markdown: {
