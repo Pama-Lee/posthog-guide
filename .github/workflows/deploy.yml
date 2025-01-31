@@ -16,32 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Swizzle Docusaurus components
-        run: pnpm run swizzle @docusaurus/theme-classic -- --danger
-
-      - name: Set build info
-        run: |
-          echo "NEXT_PUBLIC_BUILD_TIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_BUILD_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: npm ci
 
       - name: Build website
         env:
           BUILD_TIME: ${{ env.NEXT_PUBLIC_BUILD_TIME }}
           BUILD_VERSION: ${{ env.NEXT_PUBLIC_BUILD_VERSION }}
-        run: pnpm run build
+        run: npm run build
 
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
