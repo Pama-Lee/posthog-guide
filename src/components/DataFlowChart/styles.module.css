@@ -1,0 +1,116 @@
+.flowContainer {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+  overflow: hidden;
+}
+
+.customNode {
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.customNode:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.nodeContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nodeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-700);
+  font-size: 1.2rem;
+}
+
+.nodeText {
+  flex: 1;
+}
+
+.nodeLabel {
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-900);
+  margin-bottom: 0.25rem;
+}
+
+.nodeDescription {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+  line-height: 1.4;
+}
+
+/* 自定义连接点样式 */
+:global(.react-flow__handle) {
+  width: 8px;
+  height: 8px;
+  background: var(--ifm-color-primary);
+  border: 2px solid var(--ifm-background-surface-color);
+}
+
+:global(.react-flow__handle:hover) {
+  background: var(--ifm-color-primary-darker);
+}
+
+/* 自定义边样式 */
+:global(.react-flow__edge-path) {
+  stroke: var(--ifm-color-emphasis-500);
+  stroke-width: 2;
+}
+
+:global(.react-flow__edge.animated .react-flow__edge-path) {
+  stroke: var(--ifm-color-primary);
+}
+
+/* 自定义箭头样式 */
+:global(.react-flow__arrowhead) {
+  fill: var(--ifm-color-primary);
+}
+
+/* 自定义控制面板样式 */
+:global(.react-flow__controls) {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+:global(.react-flow__controls-button) {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+:global(.react-flow__controls-button:hover) {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+/* 自定义小地图样式 */
+:global(.react-flow__minimap) {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+} 

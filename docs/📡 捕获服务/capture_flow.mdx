@@ -2,9 +2,40 @@
 title: 🦔 Go-Capture 服务详细流程
 ---
 
+import DataFlowChart from '@site/src/components/DataFlowChart';
+import { FaServer, FaDatabase, FaExchangeAlt, FaCode, FaChartBar } from 'react-icons/fa';
+
+export const nodes = [
+  { id: '1', data: { label: '客户端' }, position: { x: 0, y: 100 } },
+  { id: '2', data: { label: 'Capture 服务' }, position: { x: 250, y: 100 } },
+  { id: '3', data: { label: 'Redis' }, position: { x: 500, y: 0 } },
+  { id: '4', data: { label: 'Kafka' }, position: { x: 500, y: 200 } },
+  {
+    id: '5',
+    type: 'custom',
+    data: {
+      label: 'ClickHouse',
+      description: '数据存储和分析',
+      icon: <FaChartBar />,
+    },
+    position: { x: 750, y: 200 }
+  },
+];
+
+export const edges = [
+  { id: 'e1-2', source: '1', target: '2', label: '发送事件数据' },
+  { id: 'e2-3', source: '2', target: '3', label: '检查去重/配额/速率' },
+  { id: 'e3-2', source: '3', target: '2', label: '返回检查结果' },
+  { id: 'e2-4', source: '2', target: '4', label: '发送事件' },
+  { id: 'e4-5', source: '4', target: '5', label: '存储事件', animated: true },
+];
+
 # PostHog Capture 服务详细流程
 
 PostHog 的 Capture 服务是整个数据采集系统的核心组件，它负责接收、处理和转发来自各个客户端的分析事件数据。本文将详细介绍该服务的工作流程、架构设计和关键特性。
+
+
+<DataFlowChart nodes={nodes} edges={edges} direction="LR" />
 
 ## 系统架构概述
 
@@ -141,4 +172,4 @@ graph TD
 
 ## 总结
 
-PostHog Capture 服务通过精心设计的架构和处理流程，实现了高效、可靠的事件数据采集。系统的可扩展性、容错能力和性能优化措施确保了它能够在各种负载下稳定运行。持续的监控和完善的错误处理机制则为服务的可维护性提供了保障。 
+PostHog Capture 服务通过精心设计的架构和处理流程，实现了高效、可靠的事件数据采集。系统的可扩展性、容错能力和性能优化措施确保了它能够在各种负载下稳定运行。持续的监控和完善的错误处理机制则为服务的可维护性提供了保障。

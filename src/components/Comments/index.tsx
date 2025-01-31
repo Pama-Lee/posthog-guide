@@ -3,7 +3,7 @@ import Giscus from '@giscus/react';
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
 
-export default function Comments(): JSX.Element {
+export default function Comments(){
   const { colorMode } = useColorMode();
   const { pathname } = useLocation();
 

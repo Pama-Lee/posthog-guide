@@ -1,4 +1,35 @@
+---
+title: 数据摄入架构
+---
+
+import DataFlowChart from '@site/src/components/DataFlowChart';
+
+export const nodes = [
+  { id: 'client', data: { label: '客户端' }, position: { x: 0, y: 0 } },
+  { id: 'lb', data: { label: '负载均衡器' }, position: { x: 200, y: 0 } },
+  { id: 'api', data: { label: 'API 服务器' }, position: { x: 400, y: 0 } },
+  { id: 'kafka1', data: { label: 'Kafka\nevents_plugin_ingestion' }, position: { x: 600, y: 0 } },
+  { id: 'ps', data: { label: 'Plugin Server' }, position: { x: 800, y: 0 } },
+  { id: 'ch', data: { label: 'ClickHouse' }, position: { x: 1000, y: -100 } },
+  { id: 'pg', data: { label: 'PostgreSQL' }, position: { x: 1000, y: 0 } },
+  { id: 'redis', data: { label: 'Redis' }, position: { x: 1000, y: 100 } }
+];
+
+export const edges = [
+  { id: 'e1', source: 'client', target: 'lb', label: 'HTTP/HTTPS' },
+  { id: 'e2', source: 'lb', target: 'api', label: '请求分发' },
+  { id: 'e3', source: 'api', target: 'kafka1', label: '生产消息' },
+  { id: 'e4', source: 'kafka1', target: 'ps', label: '消费消息' },
+  { id: 'e5', source: 'ps', target: 'ch', label: '写入事件' },
+  { id: 'e6', source: 'ps', target: 'pg', label: '写入用户数据' },
+  { id: 'e7', source: 'ps', target: 'redis', label: '缓存' }
+];
+
 # PostHog 数据摄入架构
+
+
+<DataFlowChart nodes={nodes} edges={edges} direction="LR" />
+
 
 ## 数据流程概述
 

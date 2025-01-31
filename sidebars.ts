@@ -1,3 +1,4 @@
+import { PluginMarket } from './src/components/PluginMarket/index';
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -100,6 +101,11 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'link',
+      label: '插件市场',
+      href: '/plugin-market',
+    }
   ],
 };
 

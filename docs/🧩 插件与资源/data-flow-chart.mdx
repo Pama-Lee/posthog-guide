@@ -1,0 +1,158 @@
+---
+title: 数据流程图组件
+description: 一个优雅的数据流程图展示组件
+---
+
+import DataFlowChart from '@site/src/components/DataFlowChart';
+import { FaDatabase, FaServer, FaChartBar, FaCode } from 'react-icons/fa';
+
+# 数据流程图组件
+
+PostHog Guide 提供了一个优雅的数据流程图组件，用于可视化展示数据流转过程。这个组件基于 React Flow 开发，支持自动布局、动画效果、交互控制等功能。
+
+## 基本示例
+
+下面是一个展示 PostHog 数据流转的基本示例：
+
+export const nodes = [
+  {
+    id: '1',
+    type: 'custom',
+    data: {
+      label: '数据采集',
+      description: '通过 SDK 采集用户行为数据',
+      icon: <FaCode />,
+    },
+  },
+  {
+    id: '2',
+    type: 'custom',
+    data: {
+      label: '数据处理',
+      description: '清洗和转换原始数据',
+      icon: <FaServer />,
+    },
+  },
+  {
+    id: '3',
+    type: 'custom',
+    data: {
+      label: '数据存储',
+      description: '将数据存储到 ClickHouse',
+      icon: <FaDatabase />,
+    },
+  },
+  {
+    id: '4',
+    type: 'custom',
+    data: {
+      label: '数据分析',
+      description: '生成分析报表和图表',
+      icon: <FaChartBar />,
+    },
+  },
+];
+
+export const edges = [
+  { id: 'e1-2', source: '1', target: '2' },
+  { id: 'e2-3', source: '2', target: '3' },
+  { id: 'e3-4', source: '3', target: '4' },
+];
+
+<DataFlowChart
+  nodes={nodes}
+  edges={edges}
+  direction="TB"
+/>
+
+## 水平布局
+
+同样的流程图，但使用水平布局：
+
+<DataFlowChart
+  nodes={nodes}
+  edges={edges}
+  direction="LR"
+/>
+
+## 使用方法
+
+组件的使用非常简单。首先定义节点和边的数据：
+
+```tsx
+const nodes = [
+  {
+    id: '1',
+    type: 'custom',
+    data: {
+      label: '节点标题',
+      description: '节点描述',
+      icon: <FaIcon />, // 可选的图标
+    },
+  },
+  // ... 更多节点
+];
+
+const edges = [
+  { id: 'e1-2', source: '1', target: '2' },
+  // ... 更多连接
+];
+```
+
+然后在 MDX 文件中使用组件：
+
+```tsx
+import DataFlowChart from '@site/src/components/DataFlowChart';
+
+<DataFlowChart
+  nodes={nodes}
+  edges={edges}
+  direction="TB" // 或 "LR" 用于水平布局
+  animated={true} // 启用边的动画效果
+  minimap={true} // 显示小地图
+  controls={true} // 显示控制面板
+/>
+```
+
+## 配置选项
+
+组件支持以下配置参数：
+
+- `nodes`: 节点数据数组
+- `edges`: 边数据数组
+- `direction`: 布局方向，'TB'（上到下）或 'LR'（左到右）
+- `minimap`: 是否显示小地图
+- `controls`: 是否显示控制面板
+- `animated`: 是否启用边的动画效果
+- `className`: 自定义 CSS 类名
+- `style`: 自定义内联样式
+- `fitView`: 是否自动适应视图
+- `nodeTypes`: 自定义节点类型
+
+## 自定义样式
+
+组件完全支持主题定制，自动适应暗色/亮色主题。你也可以通过 CSS 模块来自定义样式：
+
+```css
+.flowContainer {
+  /* 容器样式 */
+}
+
+.customNode {
+  /* 节点样式 */
+}
+
+.nodeIcon {
+  /* 图标样式 */
+}
+
+/* 等等... */
+```
+
+## 最佳实践
+
+1. 节点数量建议控制在 10 个以内，以保持图表的清晰度
+2. 为节点添加合适的描述和图标，提高可读性
+3. 根据实际需求选择合适的布局方向
+4. 使用动画效果来突出数据流向
+5. 适当利用自定义样式来匹配网站主题 
