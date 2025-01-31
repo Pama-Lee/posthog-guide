@@ -42,23 +42,11 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/pama-lee/posthog-guide/tree/main',
+          editUrl: 'https://github.com/pama-lee/posthog-guide/tree/main',
         },
         blog: {
           showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          editUrl:
-            'https://github.com/pama-lee/posthog-guide/tree/main',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+          editUrl: 'https://github.com/pama-lee/posthog-guide/tree/main',
         },
         theme: {
           customCss: './src/css/custom.css',
