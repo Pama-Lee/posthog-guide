@@ -8,12 +8,12 @@ const PluginMarketPage: React.FC = () => {
       title="PostHog 插件市场"
       description="浏览和搜索 PostHog 插件，扩展您的数据分析能力"
     >
-      <main className="container margin-vert--lg">
-        <h1>PostHog 插件市场</h1>
-        <p className="hero__subtitle">
-          浏览和搜索来自社区的 PostHog 插件，扩展您的数据分析能力。
-        </p>
-        <PluginMarket />
+      <main>
+        <PluginMarket
+          showHeader={true}
+          title="探索 PostHog 插件"
+          subtitle="发现来自社区的优质插件，为您的 PostHog 实例添加更多功能。"
+        />
       </main>
     </Layout>
   );

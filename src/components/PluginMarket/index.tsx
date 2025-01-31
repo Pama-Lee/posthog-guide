@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
-import { Card, Input, Spin, Tag, Tooltip } from 'antd';
-import { SearchOutlined, StarOutlined, ForkOutlined } from '@ant-design/icons';
+import { FaGithub, FaStar, FaCodeBranch, FaSearch, FaSpinner } from 'react-icons/fa';
 
 interface Plugin {
   id: number;
@@ -17,12 +16,22 @@ interface Plugin {
   };
 }
 
-export const PluginMarket: React.FC = () => {
-  const [plugins, setPlugins] = useState<Plugin[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+interface PluginMarketProps {
+  showHeader?: boolean;
+  title?: string;
+  subtitle?: string;
+}
 
-  useEffect(() => {
+export const PluginMarket: React.FC<PluginMarketProps> = ({
+  showHeader = true,
+  title = 'PostHog 插件市场',
+  subtitle = '浏览和搜索来自社区的 PostHog 插件，扩展您的数据分析能力。'
+}) => {
+  const [plugins, setPlugins] = React.useState<Plugin[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  React.useEffect(() => {
     fetchPlugins();
   }, []);
 
@@ -47,63 +56,80 @@ export const PluginMarket: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1>PostHog 插件市场</h1>
-        <Input
-          prefix={<SearchOutlined />}
-          placeholder="搜索插件..."
-          onChange={e => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
-        />
-      </div>
-
-      {loading ? (
-        <div className={styles.loading}>
-          <Spin size="large" />
-        </div>
-      ) : (
-        <div className={styles.grid}>
-          {filteredPlugins.map(plugin => (
-            <Card
-              key={plugin.id}
-              className={styles.card}
-              title={
-                <a href={plugin.html_url} target="_blank" rel="noopener noreferrer">
-                  {plugin.name}
-                </a>
-              }
-              extra={
-                <img
-                  src={plugin.owner.avatar_url}
-                  alt={plugin.owner.login}
-                  className={styles.avatar}
-                />
-              }
-            >
-              <p className={styles.description}>{plugin.description}</p>
-              <div className={styles.topics}>
-                {plugin.topics.map(topic => (
-                  <Tag key={topic} color="blue">
-                    {topic}
-                  </Tag>
-                ))}
-              </div>
-              <div className={styles.stats}>
-                <Tooltip title="Stars">
-                  <span>
-                    <StarOutlined /> {plugin.stargazers_count}
-                  </span>
-                </Tooltip>
-                <Tooltip title="Forks">
-                  <span>
-                    <ForkOutlined /> {plugin.forks_count}
-                  </span>
-                </Tooltip>
-              </div>
-            </Card>
-          ))}
+      {showHeader && (
+        <div className={styles.header}>
+          <div className={styles.headerContent}>
+            <h1 className={styles.title}>{title}</h1>
+            <p className={styles.subtitle}>{subtitle}</p>
+          </div>
+          <div className={styles.searchWrapper}>
+            <div className={styles.searchInputWrapper}>
+              <FaSearch className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="搜索插件..."
+                onChange={e => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+          </div>
         </div>
       )}
+
+      <div className={styles.content}>
+        {loading ? (
+          <div className={styles.loading}>
+            <FaSpinner className={styles.spinner} />
+          </div>
+        ) : (
+          <div className={styles.grid}>
+            {filteredPlugins.map(plugin => (
+              <div key={plugin.id} className={styles.card}>
+                <div className={styles.cardHeader}>
+                  <a
+                    href={plugin.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.cardTitle}
+                  >
+                    {plugin.name}
+                  </a>
+                  <img
+                    src={plugin.owner.avatar_url}
+                    alt={plugin.owner.login}
+                    className={styles.avatar}
+                  />
+                </div>
+                <p className={styles.description}>{plugin.description}</p>
+                <div className={styles.topics}>
+                  {plugin.topics.map(topic => (
+                    <span key={topic} className={styles.tag}>
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+                <div className={styles.stats}>
+                  <span title="Stars" className={styles.stat}>
+                    <FaStar /> {plugin.stargazers_count}
+                  </span>
+                  <span title="Forks" className={styles.stat}>
+                    <FaCodeBranch /> {plugin.forks_count}
+                  </span>
+                  <a
+                    href={plugin.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    className={styles.githubLink}
+                  >
+                    <FaGithub />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }; 

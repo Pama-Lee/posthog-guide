@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.6">
+    <path d="M150 60C150 60 110 80 110 120C110 160 130 170 150 170C170 170 190 160 190 120C190 80 150 60 150 60Z" fill="white"/>
+    <!-- 刺猬的刺 -->
+    <path d="M130 70L110 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M140 65L125 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M150 63L150 35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M160 65L175 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M170 70L190 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <!-- 左侧的刺 -->
+    <path d="M115 90L95 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M112 110L90 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M115 130L95 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <!-- 右侧的刺 -->
+    <path d="M185 90L205 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M188 110L210 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M185 130L205 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <!-- 眼睛和鼻子 -->
+    <circle cx="135" cy="105" r="4" fill="#333"/>
+    <circle cx="165" cy="105" r="4" fill="#333"/>
+    <circle cx="150" cy="115" r="3" fill="#333"/>
+    <!-- 微笑 -->
+    <path d="M140 125C140 125 150 135 160 125" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 复制两个刺猬，形成图案 -->
+  <g opacity="0.6" transform="translate(-100, 150)">
+    <!-- 复制上面的刺猬路径 -->
+    <path d="M150 60C150 60 110 80 110 120C110 160 130 170 150 170C170 170 190 160 190 120C190 80 150 60 150 60Z" fill="white"/>
+    <path d="M130 70L110 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M140 65L125 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M150 63L150 35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M160 65L175 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M170 70L190 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M115 90L95 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M112 110L90 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M115 130L95 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M185 90L205 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M188 110L210 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M185 130L205 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="135" cy="105" r="4" fill="#333"/>
+    <circle cx="165" cy="105" r="4" fill="#333"/>
+    <circle cx="150" cy="115" r="3" fill="#333"/>
+    <path d="M140 125C140 125 150 135 160 125" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.6" transform="translate(100, 150)">
+    <!-- 复制上面的刺猬路径 -->
+    <path d="M150 60C150 60 110 80 110 120C110 160 130 170 150 170C170 170 190 160 190 120C190 80 150 60 150 60Z" fill="white"/>
+    <path d="M130 70L110 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M140 65L125 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M150 63L150 35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M160 65L175 40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M170 70L190 50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M115 90L95 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M112 110L90 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M115 130L95 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M185 90L205 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M188 110L210 100" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <path d="M185 130L205 125" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="135" cy="105" r="4" fill="#333"/>
+    <circle cx="165" cy="105" r="4" fill="#333"/>
+    <circle cx="150" cy="115" r="3" fill="#333"/>
+    <path d="M140 125C140 125 150 135 160 125" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg> 
