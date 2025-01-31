@@ -1,12 +1,14 @@
-import type * as Preset from '@docusaurus/preset-classic';
-import type {Config} from '@docusaurus/types';
 import {themes as prismThemes} from 'prism-react-renderer';
+import type {Config} from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
+
+// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const isVercel = process.env.VERCEL === '1';
 
 const config: Config = {
-  title: 'PostHog 中文指南',
-  tagline: '开源产品分析平台',
+  title: 'PostHog 指南',
+  tagline: '开源产品分析平台使用指南',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -19,8 +21,9 @@ const config: Config = {
   baseUrl: isVercel ? '/' : '/posthog-guide/',
 
   // GitHub pages deployment config.
-  organizationName: 'Pama-Lee',
-  projectName: 'posthog-guide',
+  // If you aren't using GitHub pages, you don't need these.
+  organizationName: 'pama-lee', // Usually your GitHub org/user name.
+  projectName: 'posthog-guide', // Usually your repo name.
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -30,9 +33,9 @@ const config: Config = {
   },
   // themes: ['@docusaurus/theme-mermaid'],
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
+  // Even if you don't use internationalization, you can use this field to set
+  // useful metadata like html lang. For example, if your site is Chinese, you
+  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'zh-Hans',
     locales: ['zh-Hans'],
@@ -44,13 +47,11 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl:
-            'https://github.com/Pama-Lee/posthog-guide/tree/main/',
+          editUrl: 'https://github.com/pama-lee/posthog-guide/tree/main',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/Pama-Lee/posthog-guide/tree/main/',
+          editUrl: 'https://github.com/pama-lee/posthog-guide/tree/main',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -60,11 +61,16 @@ const config: Config = {
   ],
 
   themeConfig: {
+    // Replace with your project's social card
+    image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'PostHog 中文指南',
+      title: 'PostHog 指南',
       logo: {
-        alt: 'PostHog Logo',
+        alt: 'PostHog 刺猬',
         src: 'img/logo.svg',
+        srcDark: 'img/logo.svg',
+        width: 32,
+        height: 32
       },
       items: [
         {
@@ -74,8 +80,9 @@ const config: Config = {
           label: '文档',
         },
         {to: '/blog', label: '博客', position: 'left'},
+        {to: '/plugin-market', label: '插件市场', position: 'left'},
         {
-          href: 'https://github.com/Pama-Lee/posthog-guide',
+          href: 'https://github.com/pama-lee/posthog-guide',
           label: 'GitHub',
           position: 'right',
         },
@@ -88,7 +95,7 @@ const config: Config = {
           title: '文档',
           items: [
             {
-              label: '教程',
+              label: '入门指南',
               to: '/docs/intro',
             },
           ],
@@ -97,13 +104,34 @@ const config: Config = {
           title: '社区',
           items: [
             {
+              label: 'PostHog 官网',
+              href: 'https://posthog.com',
+            },
+            {
               label: 'GitHub',
-              href: 'https://github.com/Pama-Lee/posthog-guide',
+              href: 'https://github.com/PostHog/posthog',
+            },
+          ],
+        },
+        {
+          title: '更多',
+          items: [
+            {
+              label: '博客',
+              to: '/blog',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/pama-lee/posthog-guide',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} PostHog 中文指南`,
+      copyright: `Copyright © ${new Date().getFullYear()} PostHog 指南.${
+        process.env.BUILD_VERSION ? 
+        ` (版本: <a href="https://github.com/pama-lee/posthog-guide/commit/${process.env.BUILD_VERSION}" target="_blank">${process.env.BUILD_VERSION}</a>, 构建时间: ${process.env.BUILD_TIME})` 
+        : ''
+      }`,
     },
     prism: {
       theme: prismThemes.github,
