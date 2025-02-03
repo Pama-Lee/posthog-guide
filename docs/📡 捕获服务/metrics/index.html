@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-📡 捕获服务/metrics" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">PostHog Capture 监控指标 | PostHog 指南</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://pama-lee.github.io/posthog-guide/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://pama-lee.github.io/posthog-guide/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://pama-lee.github.io/posthog-guide/docs/📡 捕获服务/metrics"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="PostHog Capture 监控指标 | PostHog 指南"><meta data-rh="true" name="description" content="Prometheus 指标"><meta data-rh="true" property="og:description" content="Prometheus 指标"><link data-rh="true" rel="icon" href="/posthog-guide/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://pama-lee.github.io/posthog-guide/docs/📡 捕获服务/metrics"><link data-rh="true" rel="alternate" href="https://pama-lee.github.io/posthog-guide/docs/📡 捕获服务/metrics" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://pama-lee.github.io/posthog-guide/docs/📡 捕获服务/metrics" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/posthog-guide/blog/rss.xml" title="PostHog 指南 RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/posthog-guide/blog/atom.xml" title="PostHog 指南 Atom Feed"><link rel="stylesheet" href="/posthog-guide/assets/css/styles.93c2b873.css">
+<script src="/posthog-guide/assets/js/runtime~main.46c73bd9.js" defer="defer"></script>
+<script src="/posthog-guide/assets/js/main.8e68062b.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/posthog-guide/img/logo.svg"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/posthog-guide/"><div class="navbar__logo"><img src="/posthog-guide/img/logo.svg" alt="PostHog 刺猬" class="themedComponent_mlkZ themedComponent--light_NVdE" height="32" width="32"><img src="/posthog-guide/img/logo.svg" alt="PostHog 刺猬" class="themedComponent_mlkZ themedComponent--dark_xIcU" height="32" width="32"></div><b class="navbar__title text--truncate">PostHog 指南</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/posthog-guide/docs/intro">文档</a><a class="navbar__item navbar__link" href="/posthog-guide/blog">博客</a><a class="navbar__item navbar__link" href="/posthog-guide/plugin-market">插件市场</a><a class="navbar__item navbar__link" href="/posthog-guide/plugin-generator">插件生成器</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/pama-lee/posthog-guide" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="切换浅色/暗黑模式（当前为浅色模式）" aria-label="切换浅色/暗黑模式（当前为浅色模式）" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/posthog-guide/docs/intro">PostHog 指南</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/posthog-guide/docs/category/-基本架构">🏭 基本架构</a><button aria-label="展开侧边栏分类 &#x27;🏭 基本架构&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/posthog-guide/docs/category/-部署">🚀 部署</a><button aria-label="展开侧边栏分类 &#x27;🚀 部署&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/posthog-guide/docs/category/-捕获服务">📡 捕获服务</a><button aria-label="折叠侧边栏分类 &#x27;📡 捕获服务&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/api">PostHog Capture API 文档</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/architecture">PostHog Capture 服务架构设计</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/capture_flow">🦔 Go-Capture 服务详细流程</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/configuration">PostHog Capture 配置说明</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/deployment">PostHog Capture 部署指南</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/posthog-guide/docs/📡 捕获服务/metrics">PostHog Capture 监控指标</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/posthog-guide/docs/category/️-负载均衡与转发">⚖️ 负载均衡与转发</a><button aria-label="展开侧边栏分类 &#x27;⚖️ 负载均衡与转发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/posthog-guide/docs/category/-持久化数据库">💾 持久化数据库</a><button aria-label="展开侧边栏分类 &#x27;💾 持久化数据库&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/posthog-guide/docs/🔍 HogQL/aggregations">🔍 HogQL</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/posthog-guide/docs/🧩 插件与资源/data-flow-chart">🧩 插件与资源</a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/posthog-guide/plugin-market">插件市场</a></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/posthog-guide/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/posthog-guide/docs/category/-捕获服务"><span itemprop="name">📡 捕获服务</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">PostHog Capture 监控指标</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>PostHog Capture 监控指标</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="prometheus-指标">Prometheus 指标<a href="#prometheus-指标" class="hash-link" aria-label="Prometheus 指标的直接链接" title="Prometheus 指标的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="事件相关指标">事件相关指标<a href="#事件相关指标" class="hash-link" aria-label="事件相关指标的直接链接" title="事件相关指标的直接链接">​</a></h3>
+<ol>
+<li><strong>事件接收计数</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_events_received_total{type=&quot;&lt;event_type&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>标签：<!-- -->
+<ul>
+<li>type: &quot;event&quot; 或 &quot;recording&quot;</li>
+</ul>
+</li>
+<li>说明：接收到的事件总数</li>
+</ul>
+<ol start="2">
+<li><strong>事件丢弃计数</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_events_dropped_total{cause=&quot;&lt;cause&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>标签：<!-- -->
+<ul>
+<li>cause: 丢弃原因（如 &quot;size_exceeded&quot;, &quot;quota_limited&quot; 等）</li>
+</ul>
+</li>
+<li>说明：被丢弃的事件数量</li>
+</ul>
+<ol start="3">
+<li><strong>事件大小分布</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_event_size_bytes{type=&quot;&lt;event_type&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Histogram</li>
+<li>标签：<!-- -->
+<ul>
+<li>type: &quot;event&quot; 或 &quot;recording&quot;</li>
+</ul>
+</li>
+<li>Buckets: [1024, 5120, 10240, 51200, 102400, 512000, 1048576, 5242880, 10485760]</li>
+<li>说明：事件大小分布情况</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="请求处理指标">请求处理指标<a href="#请求处理指标" class="hash-link" aria-label="请求处理指标的直接链接" title="请求处理指标的直接链接">​</a></h3>
+<ol>
+<li><strong>请求处理时间</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_request_duration_seconds{path=&quot;&lt;path&gt;&quot;,method=&quot;&lt;method&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Histogram</li>
+<li>标签：<!-- -->
+<ul>
+<li>path: 请求路径</li>
+<li>method: HTTP 方法</li>
+</ul>
+</li>
+<li>说明：请求处理耗时分布</li>
+</ul>
+<ol start="2">
+<li><strong>Kafka 生产者错误</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_kafka_producer_errors_total</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>说明：Kafka 生产者错误总数</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="redis-操作指标">Redis 操作指标<a href="#redis-操作指标" class="hash-link" aria-label="Redis 操作指标的直接链接" title="Redis 操作指标的直接链接">​</a></h3>
+<ol>
+<li><strong>Redis 操作延迟</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_redis_operation_duration_seconds{operation=&quot;&lt;operation&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Histogram</li>
+<li>标签：<!-- -->
+<ul>
+<li>operation: 操作类型</li>
+</ul>
+</li>
+<li>说明：Redis 操作耗时分布</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="配额和限制指标">配额和限制指标<a href="#配额和限制指标" class="hash-link" aria-label="配额和限制指标的直接链接" title="配额和限制指标的直接链接">​</a></h3>
+<ol>
+<li><strong>配额限制计数</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_quota_limited_total{type=&quot;&lt;type&gt;&quot;,token=&quot;&lt;token&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>标签：<!-- -->
+<ul>
+<li>type: 事件类型</li>
+<li>token: API 令牌</li>
+</ul>
+</li>
+<li>说明：因配额限制而被拒绝的请求数</li>
+</ul>
+<ol start="2">
+<li><strong>Token 验证结果</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_token_validation_total{result=&quot;&lt;result&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>标签：<!-- -->
+<ul>
+<li>result: &quot;success&quot; 或 &quot;failure&quot;</li>
+</ul>
+</li>
+<li>说明：Token 验证结果统计</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="处理错误指标">处理错误指标<a href="#处理错误指标" class="hash-link" aria-label="处理错误指标的直接链接" title="处理错误指标的直接链接">​</a></h3>
+<ol>
+<li><strong>处理错误计数</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">capture_processing_errors_total{type=&quot;&lt;type&gt;&quot;,error=&quot;&lt;error&gt;&quot;}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ul>
+<li>类型：Counter</li>
+<li>标签：<!-- -->
+<ul>
+<li>type: 事件类型</li>
+<li>error: 错误类型</li>
+</ul>
+</li>
+<li>说明：事件处理错误统计</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="监控面板">监控面板<a href="#监控面板" class="hash-link" aria-label="监控面板的直接链接" title="监控面板的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="推荐的-grafana-面板配置">推荐的 Grafana 面板配置<a href="#推荐的-grafana-面板配置" class="hash-link" aria-label="推荐的 Grafana 面板配置的直接链接" title="推荐的 Grafana 面板配置的直接链接">​</a></h3>
+<ol>
+<li><strong>总体概览</strong></li>
+</ol>
+<ul>
+<li>事件接收速率</li>
+<li>错误率</li>
+<li>响应时间 P95/P99</li>
+<li>配额限制情况</li>
+</ul>
+<ol start="2">
+<li><strong>性能监控</strong></li>
+</ol>
+<ul>
+<li>Redis 操作延迟</li>
+<li>Kafka 生产延迟</li>
+<li>请求处理时间分布</li>
+<li>事件大小分布</li>
+</ul>
+<ol start="3">
+<li><strong>错误追踪</strong></li>
+</ol>
+<ul>
+<li>各类错误数量</li>
+<li>Token 验证失败率</li>
+<li>Kafka 错误率</li>
+<li>Redis 错误率</li>
+</ul>
+<ol start="4">
+<li><strong>容量规划</strong></li>
+</ol>
+<ul>
+<li>事件吞吐量趋势</li>
+<li>存储使用趋势</li>
+<li>配额使用情况</li>
+<li>资源使用率</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="告警规则">告警规则<a href="#告警规则" class="hash-link" aria-label="告警规则的直接链接" title="告警规则的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="关键告警">关键告警<a href="#关键告警" class="hash-link" aria-label="关键告警的直接链接" title="关键告警的直接链接">​</a></h3>
+<ol>
+<li><strong>高错误率</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">rate(capture_processing_errors_total[5m]) &gt; 0.1</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ol start="2">
+<li><strong>高延迟</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">histogram_quantile(0.95, rate(capture_request_duration_seconds_bucket[5m])) &gt; 1</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ol start="3">
+<li><strong>Kafka 错误</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">rate(capture_kafka_producer_errors_total[5m]) &gt; 0</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="警告级别告警">警告级别告警<a href="#警告级别告警" class="hash-link" aria-label="警告级别告警的直接链接" title="警告级别告警的直接链接">​</a></h3>
+<ol>
+<li><strong>配额限制增加</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">rate(capture_quota_limited_total[1h]) &gt; rate(capture_quota_limited_total[1h] offset 1h)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<ol start="2">
+<li><strong>事件丢弃率高</strong></li>
+</ol>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">rate(capture_events_dropped_total[5m]) / rate(capture_events_received_total[5m]) &gt; 0.05</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="监控最佳实践">监控最佳实践<a href="#监控最佳实践" class="hash-link" aria-label="监控最佳实践的直接链接" title="监控最佳实践的直接链接">​</a></h2>
+<ol>
+<li><strong>数据保留</strong></li>
+</ol>
+<ul>
+<li>原始指标数据保留 15 天</li>
+<li>聚合数据保留 90 天</li>
+<li>重要事件永久存储</li>
+</ul>
+<ol start="2">
+<li><strong>采样率</strong></li>
+</ol>
+<ul>
+<li>一般指标 15s 采样</li>
+<li>详细指标 1min 采样</li>
+<li>长期趋势 5min 采样</li>
+</ul>
+<ol start="3">
+<li><strong>告警配置</strong></li>
+</ol>
+<ul>
+<li>设置合适的告警阈值</li>
+<li>配置告警升级机制</li>
+<li>建立告警响应流程</li>
+<li>定期审查告警规则</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/pama-lee/posthog-guide/tree/main/docs/📡 捕获服务/metrics.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer><div style="margin-top:2rem"></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/posthog-guide/docs/📡 捕获服务/deployment"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">PostHog Capture 部署指南</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/posthog-guide/docs/category/️-负载均衡与转发"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">⚖️ 负载均衡与转发</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#prometheus-指标" class="table-of-contents__link toc-highlight">Prometheus 指标</a><ul><li><a href="#事件相关指标" class="table-of-contents__link toc-highlight">事件相关指标</a></li><li><a href="#请求处理指标" class="table-of-contents__link toc-highlight">请求处理指标</a></li><li><a href="#redis-操作指标" class="table-of-contents__link toc-highlight">Redis 操作指标</a></li><li><a href="#配额和限制指标" class="table-of-contents__link toc-highlight">配额和限制指标</a></li><li><a href="#处理错误指标" class="table-of-contents__link toc-highlight">处理错误指标</a></li></ul></li><li><a href="#监控面板" class="table-of-contents__link toc-highlight">监控面板</a><ul><li><a href="#推荐的-grafana-面板配置" class="table-of-contents__link toc-highlight">推荐的 Grafana 面板配置</a></li></ul></li><li><a href="#告警规则" class="table-of-contents__link toc-highlight">告警规则</a><ul><li><a href="#关键告警" class="table-of-contents__link toc-highlight">关键告警</a></li><li><a href="#警告级别告警" class="table-of-contents__link toc-highlight">警告级别告警</a></li></ul></li><li><a href="#监控最佳实践" class="table-of-contents__link toc-highlight">监控最佳实践</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">文档</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/posthog-guide/docs/intro">入门指南</a></li></ul></div><div class="col footer__col"><div class="footer__title">社区</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://posthog.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">PostHog 官网<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/PostHog/posthog" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">更多</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/posthog-guide/blog">博客</a></li><li class="footer__item"><a href="https://github.com/pama-lee/posthog-guide" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 PostHog 指南.</div></div></div></footer></div>
+</body>
+</html>

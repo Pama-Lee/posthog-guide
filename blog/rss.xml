@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>PostHog 指南 Blog</title>
+        <link>https://pama-lee.github.io/posthog-guide/blog</link>
+        <description>PostHog 指南 Blog</description>
+        <lastBuildDate>Fri, 31 Jan 2025 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>zh-Hans</language>
+        <item>
+            <title><![CDATA[GithubCard：优雅的 GitHub 仓库展示组件]]></title>
+            <link>https://pama-lee.github.io/posthog-guide/blog/github-card-component</link>
+            <guid>https://pama-lee.github.io/posthog-guide/blog/github-card-component</guid>
+            <pubDate>Fri, 31 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[PostHog Guide 网站最近新增了一个精心设计的 GitHub 仓库展示组件。这个组件能够以优雅的卡片形式展示任何 GitHub 仓库的基本信息，完美适配了网站的设计风格，并且支持响应式布局和暗色主题。]]></description>
+            <content:encoded><![CDATA[<p>PostHog Guide 网站最近新增了一个精心设计的 GitHub 仓库展示组件。这个组件能够以优雅的卡片形式展示任何 GitHub 仓库的基本信息，完美适配了网站的设计风格，并且支持响应式布局和暗色主题。</p>
+<p>在开发 PostHog Guide 文档网站的过程中，我们经常需要引用各种 GitHub 仓库。为了让这些引用更加直观和美观，我们开发了这个 GithubCard 组件。它不仅能展示仓库的基本信息，还提供了流畅的交互体验和精致的视觉效果。</p>
+<p>让我们先看几个实际的展示效果。这是我们的主仓库：</p>
+<div class="loading_Exjh medium_nOD6">加载中...</div>
+<p>组件的使用非常简单，你只需要在 MDX 文件中导入组件，然后传入仓库地址即可：</p>
+<div class="language-jsx codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-jsx codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports maybe-class-name">GithubCard</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'@site/src/components/GithubCard'</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag class-name" style="color:#00009f">GithubCard</span><span class="token tag" style="color:#00009f"> </span><span class="token tag attr-name" style="color:#00a4db">repo</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag attr-value" style="color:#e3116c">pama-lee/posthog-guide</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag" style="color:#00009f"> </span><span class="token tag punctuation" style="color:#393A34">/&gt;</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="复制代码到剪贴板" title="复制" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>这个组件支持三种不同的尺寸。当你需要在紧凑的空间中展示仓库时，可以使用小尺寸版本：</p>
+<div class="loading_Exjh small_JEwn">加载中...</div>
+<p>如果你想要突出显示某个重要的仓库，可以使用大尺寸版本：</p>
+<div class="loading_Exjh large_fUjZ">加载中...</div>
+<p>除了尺寸之外，组件还支持多个显示选项的配置。比如，你可以选择是否显示仓库所有者、编程语言标签和统计数据。这让你能够根据具体需求来调整信息的展示密度。下面是一个隐藏了语言标签的例子：</p>
+<div class="loading_Exjh medium_nOD6">加载中...</div>
+<p>统计数据区域使用了来自 React Icons 库的图标，确保了图标风格的统一性。这些图标和文字在鼠标悬停时都会变成主题色，提供了良好的交互反馈。整个组件完全支持响应式设计，在不同尺寸的屏幕上都能保持良好的显示效果。同时，它还完美支持暗色主题，会自动适应网站的主题切换。</p>]]></content:encoded>
+            <category>component</category>
+            <category>github</category>
+        </item>
+        <item>
+            <title><![CDATA[加入 PostHog Guide 中文社区]]></title>
+            <link>https://pama-lee.github.io/posthog-guide/blog/join-posthog-community</link>
+            <guid>https://pama-lee.github.io/posthog-guide/blog/join-posthog-community</guid>
+            <pubDate>Wed, 29 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[欢迎来到 PostHog Guide 中文社区！]]></description>
+            <content:encoded><![CDATA[<p>欢迎来到 PostHog Guide 中文社区！</p>
+<p>PostHog Guide 是一个独立的中文社区，致力于帮助中文开发者更好地理解和使用 PostHog 这个优秀的开源产品分析平台。
+注意，此平台不是 PostHog 官方社区。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="为什么加入我们">为什么加入我们？<a href="https://pama-lee.github.io/posthog-guide/blog/join-posthog-community#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%A0%E5%85%A5%E6%88%91%E4%BB%AC" class="hash-link" aria-label="为什么加入我们？的直接链接" title="为什么加入我们？的直接链接">​</a></h2>
+<ul>
+<li>获取 PostHog 使用教程和实践经验</li>
+<li>与其他中文用户交流使用心得</li>
+<li>分享您的使用案例和经验</li>
+<li>参与社区文档的改进</li>
+<li>获得中文环境下的技术支持</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="如何加入">如何加入？<a href="https://pama-lee.github.io/posthog-guide/blog/join-posthog-community#%E5%A6%82%E4%BD%95%E5%8A%A0%E5%85%A5" class="hash-link" aria-label="如何加入？的直接链接" title="如何加入？的直接链接">​</a></h2>
+<p>扫描下方二维码，加入我们的 QQ 群：</p>
+<div style="display:flex;justify-content:center;margin:20px 0"><img src="https://pama-lee.github.io/posthog-guide/img/posthog_guide_group_qr.jpg" alt="PostHog Guide 中文社区 QQ 群" style="width:200px"></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="社区指南">社区指南<a href="https://pama-lee.github.io/posthog-guide/blog/join-posthog-community#%E7%A4%BE%E5%8C%BA%E6%8C%87%E5%8D%97" class="hash-link" aria-label="社区指南的直接链接" title="社区指南的直接链接">​</a></h2>
+<ol>
+<li>保持友善和专业的交流态度</li>
+<li>提问前请先查阅文档</li>
+<li>分享经验时请注意保护隐私信息</li>
+<li>欢迎参与社区建设和内容贡献</li>
+</ol>
+<p>期待在 PostHog Guide 社区中与您相遇！</p>]]></content:encoded>
+            <category>community</category>
+            <category>posthog</category>
+        </item>
+    </channel>
+</rss>
