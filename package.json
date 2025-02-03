@@ -15,6 +15,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.0",
     "@docusaurus/core": "3.7.0",
     "@docusaurus/preset-classic": "3.7.0",
     "@docusaurus/theme-classic": "^3.7.0",
@@ -22,11 +23,13 @@
     "@giscus/react": "^3.1.0",
     "@mdx-js/react": "^3.0.0",
     "@reactflow/node-resizer": "^2.2.14",
+    "@types/file-saver": "^2.0.7",
     "@types/unist": "^3.0.3",
     "antd": "^5.14.1",
-    "@ant-design/icons": "^5.3.0",
     "clsx": "^2.0.0",
     "dagre": "^0.8.5",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
     "mermaid": "^11.4.1",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",

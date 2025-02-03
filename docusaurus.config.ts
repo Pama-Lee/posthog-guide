@@ -81,6 +81,7 @@ const config: Config = {
         },
         {to: '/blog', label: '博客', position: 'left'},
         {to: '/plugin-market', label: '插件市场', position: 'left'},
+        {to: '/plugin-generator', label: '插件生成器', position: 'left'},
         {
           href: 'https://github.com/pama-lee/posthog-guide',
           label: 'GitHub',
